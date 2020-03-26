@@ -189,14 +189,17 @@ import {goodsAllList, goodsDelete, goodsUpdate} from '../api'
           goodsUpdate.fetch(this.updateModal,this.updateModal.updateGoodsCode)
                 .then(data =>{
                     console.log("upd")
-                    //location.reload()
-                    this.$router.go('/goodsList')
+                  
+                    this.$route.push({name : "/goodsList"})
                 })
                 .finally(_=>{
                     this.isBusy
                     this.updateModal.updateGoodsName = "",
                     this.updateModal.updateGoodsCode = "",
                     this.updateModal.updateGoodsPrice = ""
+                    console.log('update')
+                    
+
                 })
           
  

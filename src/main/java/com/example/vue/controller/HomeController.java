@@ -3,13 +3,13 @@ package com.example.vue.controller;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-//@Controller
+@Controller
 public class HomeController implements ErrorController {
 
     @GetMapping({"/","/error"})
     public String goHome(){
         System.out.println("!!");
-        return "/static/index.html";
+        return "index.html";
     }
 
 

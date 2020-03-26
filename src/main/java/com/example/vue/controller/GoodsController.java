@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 
-//@CrossOrigin(value = "http://localhost:8080")
+@CrossOrigin(value = "http://localhost:8080")
 @Slf4j
 @org.springframework.web.bind.annotation.RestController
 @RequiredArgsConstructor
@@ -22,11 +22,7 @@ public class GoodsController {
     @Cacheable(value = "goodsCache",key = "#goodsCode")
     @GetMapping(value = "/{goodsCode}")
     public GoodsInfoResDTO findByGoodsCode(@PathVariable String goodsCode){
-        long startTime = System.currentTimeMillis();
-        System.out.println("start ");
-        long endTime = System.currentTimeMillis();
         GoodsInfoResDTO goodsInfoResDTO = goodsService.findByGoodsCode(goodsCode);
-        System.out.println("how long time : "+Long.toString(endTime-startTime));
         return goodsInfoResDTO;
     }
 
@@ -52,25 +48,11 @@ public class GoodsController {
         goodsService.updateGoods(goodsUpdReqDTO,goodsCode);
     }
 
+    @CacheEvict(value = "goodsCache",key = "#goodsCode")
     @DeleteMapping(value = "/{goodsCode}")
     public void deleteGoods(@PathVariable String goodsCode){
         System.out.println("deleteGoods : "+goodsCode);
         goodsService.deleteGoods(goodsCode);
-    }
-
-    @Cacheable(value = "cacheTest",key = "#testId")
-    @GetMapping("/test/{testId}")
-    public GoodsInfoResDTO test(@PathVariable String testId){
-        long startTime = System.currentTimeMillis();
-        System.out.println("start ");
-        long endTime = System.currentTimeMillis();
-        GoodsInfoResDTO result = GoodsInfoResDTO.builder()
-                                .goodsName("엽기 떡볶이")
-                                .goodsCode("Y101")
-                                .goodsPrice("10000")
-                                .build();
-        System.out.println("endTime - startTime : "+Long.toString(endTime-startTime));
-        return result;
     }
 
 }
